@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Signed in{% endblock %}
+{% block content %}
+<p class="big">✓</p>
+<h1>Signed in{% if username %} as <code>@{{ username }}{% endif %}</code></h1>
+<p>
+  Your account on <code>{{ instance | replace('https://', '') }}</code> is ready
+  to hand over.
+</p>
+<div class="card">
+  <p style="margin:0"><strong>Go back to your device and tap “Done”.</strong></p>
+</div>
+<p class="muted">You can now close this tab.</p>
+{% endblock %}

@@ -1,0 +1,13 @@
+.git
+.github
+.claude
+.venv
+.env
+__pycache__
+*.egg-info
+.pytest_cache
+.ruff_cache
+.pre-commit-config.yaml
+Dockerfile
+compose.yml
+compose.override.yml

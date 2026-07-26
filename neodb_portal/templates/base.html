@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}NeoDB Portal{% endblock %}</title>
+<style>
+  /* Everything inline: this page is opened once, on a phone, often on a poor
+     connection, and must never depend on a third-party asset host. */
+  :root {
+    --bg: #fbfaf8;
+    --fg: #1b1a18;
+    --muted: #6a655e;
+    --line: #ddd8d0;
+    --accent: #2f6b4f;
+    --accent-fg: #ffffff;
+    --danger: #8c2f2f;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16150f;
+      --fg: #f0ece4;
+      --muted: #a49d92;
+      --line: #35322b;
+      --accent: #6fbf95;
+      --accent-fg: #10221a;
+      --danger: #e88b8b;
+      --card: #1f1d17;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 1.5rem 1.1rem 3rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 32rem; margin: 0 auto; }
+  h1 { font-size: 1.4rem; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  p { margin: 0 0 1rem; }
+  .muted { color: var(--muted); font-size: .92rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: .8rem;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+  }
+  fieldset { border: 0; margin: 0; padding: 0; }
+  legend { padding: 0; font-weight: 600; margin-bottom: .6rem; }
+  label.choice {
+    display: flex;
+    align-items: baseline;
+    gap: .7rem;
+    padding: .75rem .2rem;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+  }
+  label.choice:last-of-type { border-bottom: 0; }
+  /* Radios only: unqualified, this outranks the input[type=text] rule below on
+     specificity and shrinks the "another instance" box to a 1.1rem square. */
+  label.choice input[type=radio] {
+    margin: 0;
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  /* The row that carries the free-text box: let it use the full card width. */
+  label.choice .fill { flex: 1; min-width: 0; }
+  label.choice .fill .host { display: block; }
+  .host { font-weight: 600; }
+  .note { color: var(--muted); font-size: .85rem; }
+  input[type=text] {
+    width: 100%;
+    padding: .7rem .8rem;
+    font-size: 1rem;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: .5rem;
+    margin-top: .5rem;
+  }
+  button {
+    width: 100%;
+    padding: .85rem 1rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--accent-fg);
+    background: var(--accent);
+    border: 0;
+    border-radius: .6rem;
+    cursor: pointer;
+  }
+  button:active { filter: brightness(.94); }
+  .error {
+    border-left: 3px solid var(--danger);
+    background: color-mix(in srgb, var(--danger) 8%, transparent);
+    padding: .7rem .9rem;
+    border-radius: .3rem;
+    margin-bottom: 1rem;
+  }
+  .big { font-size: 2.6rem; line-height: 1; margin-bottom: .6rem; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: .3rem;
+    padding: .1rem .35rem;
+  }
+</style>
+</head>
+<body>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

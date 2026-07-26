@@ -1,0 +1,55 @@
+services:
+  portal:
+    build: .
+    image: neodb-portal:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8903:8080"
+
+    environment:
+      PORTAL_BASE_URL: ${PORTAL_BASE_URL:-https://p.neodb.net}
+      PORTAL_SESSION_TTL: ${PORTAL_SESSION_TTL:-900}
+      PORTAL_MAX_SESSIONS: ${PORTAL_MAX_SESSIONS:-10000}
+      PORTAL_CREATE_RATE: ${PORTAL_CREATE_RATE:-20}
+      PORTAL_WEBSITE: ${PORTAL_WEBSITE:-}
+
+      # Trust X-Forwarded-* only from the proxy in front of this. Widening it
+      # would let callers spoof their own address past the rate limiter.
+      PORTAL_FORWARDED_ALLOW_IPS: ${PORTAL_FORWARDED_ALLOW_IPS:-127.0.0.1}
+
+      # Metrics are only emitted when a DSN is present.
+      SENTRY_DSN: ${SENTRY_DSN:-}
+      SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-production}
+      SENTRY_TRACES_SAMPLE_RATE: ${SENTRY_TRACES_SAMPLE_RATE:-0}
+
+    # Nothing is written anywhere, so the filesystem can be sealed.
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen("http://127.0.0.1:8080/healthz").read()
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    deploy:
+      resources:
+        limits:
+          # Sessions are small and capped; this is generous.
+          memory: 256M

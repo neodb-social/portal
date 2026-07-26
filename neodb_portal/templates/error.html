@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Something went wrong{% endblock %}
+{% block content %}
+<h1>That didn’t work</h1>
+<div class="error">{{ message }}</div>
+<p class="muted">
+  Sign-in links are deliberately short-lived. Start again on your device to
+  get a fresh one.
+</p>
+{% endblock %}

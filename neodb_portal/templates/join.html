@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Sign in to NeoDB{% endblock %}
+{% block content %}
+<h1>Sign in to NeoDB</h1>
+<p class="muted">
+  Choose the instance your account is on, sign in
+  there, and your device will pick up the result.
+</p>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+<form method="post" action="/{{ code }}">
+  <div class="card">
+    <fieldset>
+      <legend>Your instance</legend>
+      {% for entry in instances %}
+      <label class="choice">
+        <input type="radio" name="instance" value="{{ entry.host }}"
+               {% if loop.first and not entered %}checked{% endif %}>
+        <span>
+          <span class="host">{{ entry.host }}</span><br>
+          <span class="note">{{ entry.name }}{% if entry.note %} · {{ entry.note }}{% endif %}</span>
+        </span>
+      </label>
+      {% endfor %}
+      <label class="choice">
+        <input type="radio" name="instance" value="__other__"
+               {% if entered %}checked{% endif %}
+               onchange="document.getElementById('other').focus()">
+        <span class="fill">
+          <span class="host">Another instance</span>
+          <input type="text" id="other" name="other" inputmode="url"
+                 autocapitalize="off" autocorrect="off" spellcheck="false"
+                 placeholder="neodb.example.org" value="{{ entered or '' }}"
+                 onfocus="this.closest('label').querySelector('input[type=radio]').checked = true">
+        </span>
+      </label>
+    </fieldset>
+  </div>
+
+  <button type="submit">Continue</button>
+</form>
+
+<p class="muted" style="margin-top:1.2rem">
+  This link works for about {{ minutes_left }} more minute{{ '' if minutes_left == 1 else 's' }}.
+</p>
+{% endblock %}
