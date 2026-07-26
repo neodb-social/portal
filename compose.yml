@@ -1,7 +1,7 @@
 services:
   portal:
     build: .
-    image: neodb-portal:latest
+    image: neodb/neodb-portal:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:8903:8080"
@@ -12,17 +12,12 @@ services:
       PORTAL_MAX_SESSIONS: ${PORTAL_MAX_SESSIONS:-10000}
       PORTAL_CREATE_RATE: ${PORTAL_CREATE_RATE:-20}
       PORTAL_WEBSITE: ${PORTAL_WEBSITE:-}
-
-      # Trust X-Forwarded-* only from the proxy in front of this. Widening it
-      # would let callers spoof their own address past the rate limiter.
       PORTAL_FORWARDED_ALLOW_IPS: ${PORTAL_FORWARDED_ALLOW_IPS:-127.0.0.1}
-
       # Metrics are only emitted when a DSN is present.
       SENTRY_DSN: ${SENTRY_DSN:-}
       SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-production}
       SENTRY_TRACES_SAMPLE_RATE: ${SENTRY_TRACES_SAMPLE_RATE:-0}
 
-    # Nothing is written anywhere, so the filesystem can be sealed.
     read_only: true
     tmpfs:
       - /tmp
@@ -51,5 +46,4 @@ services:
     deploy:
       resources:
         limits:
-          # Sessions are small and capped; this is generous.
           memory: 256M
