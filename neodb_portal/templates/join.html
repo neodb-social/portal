@@ -11,35 +11,39 @@
 
 <form method="post" action="/{{ code }}">
   <div class="card">
-    <fieldset>
-      <legend>Your instance</legend>
+    <label class="field-label" for="instance">Your instance</label>
+    <select id="instance" name="instance">
       {% for entry in instances %}
-      <label class="choice">
-        <input type="radio" name="instance" value="{{ entry.host }}"
-               {% if loop.first and not entered %}checked{% endif %}>
-        <span>
-          <span class="host">{{ entry.host }}</span><br>
-          <span class="note">{{ entry.name }}{% if entry.note %} · {{ entry.note }}{% endif %}</span>
-        </span>
-      </label>
+      <option value="{{ entry.host }}">{{ entry.host }}{% if entry.name %} — {{ entry.name }}{% endif %}</option>
       {% endfor %}
-      <label class="choice">
-        <input type="radio" name="instance" value="__other__"
-               {% if entered %}checked{% endif %}
-               onchange="document.getElementById('other').focus()">
-        <span class="fill">
-          <span class="host">Another instance</span>
-          <input type="text" id="other" name="other" inputmode="url"
-                 autocapitalize="off" autocorrect="off" spellcheck="false"
-                 placeholder="neodb.example.org" value="{{ entered or '' }}"
-                 onfocus="this.closest('label').querySelector('input[type=radio]').checked = true">
-        </span>
-      </label>
-    </fieldset>
+      <option value="__other__" {% if entered %}selected{% endif %}>Another instance…</option>
+    </select>
+    <div id="other-row">
+      <input type="text" id="other" name="other" inputmode="url"
+             autocapitalize="off" autocorrect="off" spellcheck="false"
+             placeholder="neodb.example.org" value="{{ entered or '' }}"
+             aria-label="Address of the other instance">
+    </div>
   </div>
 
   <button type="submit">Continue</button>
 </form>
+
+<script>
+  (function () {
+    var pick = document.getElementById("instance");
+    var row = document.getElementById("other-row");
+    /* Hidden by script rather than by markup, so without JavaScript the box
+       simply stays visible and "another instance" still works. */
+    function sync(focus) {
+      var isOther = pick.value === "__other__";
+      row.hidden = !isOther;
+      if (isOther && focus) document.getElementById("other").focus();
+    }
+    pick.addEventListener("change", function () { sync(true); });
+    sync(false);
+  })();
+</script>
 
 <p class="muted" style="margin-top:1.2rem">
   This link works for about {{ minutes_left }} more minute{{ '' if minutes_left == 1 else 's' }}.

@@ -51,30 +51,25 @@
     padding: 1rem 1.1rem;
     margin-bottom: 1rem;
   }
-  fieldset { border: 0; margin: 0; padding: 0; }
-  legend { padding: 0; font-weight: 600; margin-bottom: .6rem; }
-  label.choice {
-    display: flex;
-    align-items: baseline;
-    gap: .7rem;
-    padding: .75rem .2rem;
-    border-bottom: 1px solid var(--line);
-    cursor: pointer;
+  .field-label { display: block; font-weight: 600; margin-bottom: .6rem; }
+  select {
+    width: 100%;
+    padding: .7rem .8rem;
+    font-size: 1rem;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: .5rem;
+    /* Long host names must truncate, not stretch the card past the phone
+       screen; the select itself is what caps their width. */
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .8rem center;
+    padding-right: 2.2rem;
   }
-  label.choice:last-of-type { border-bottom: 0; }
-  /* Radios only: unqualified, this outranks the input[type=text] rule below on
-     specificity and shrinks the "another instance" box to a 1.1rem square. */
-  label.choice input[type=radio] {
-    margin: 0;
-    flex: none;
-    width: 1.1rem;
-    height: 1.1rem;
-  }
-  /* The row that carries the free-text box: let it use the full card width. */
-  label.choice .fill { flex: 1; min-width: 0; }
-  label.choice .fill .host { display: block; }
-  .host { font-weight: 600; }
-  .note { color: var(--muted); font-size: .85rem; }
   input[type=text] {
     width: 100%;
     padding: .7rem .8rem;
