@@ -24,6 +24,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, FastAPI, Form, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .config import Settings
@@ -113,6 +114,11 @@ def create_app(
         version="0.1.0",
         docs_url=None,
         redoc_url=None,
+    )
+    app.mount(
+        "/svc/static",
+        StaticFiles(directory=Path(__file__).parent / "static"),
+        name="static",
     )
     app.state.settings = settings
     app.state.sessions = sessions

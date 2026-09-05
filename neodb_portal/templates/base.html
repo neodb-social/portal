@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>{% block title %}NeoDB Portal{% endblock %}</title>
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='icon.svg') }}">
 <style>
-  /* Everything inline: this page is opened once, on a phone, often on a poor
-     connection, and must never depend on a third-party asset host. */
+  /* Styles stay inline and the logo is served locally: this page is opened
+     once, on a phone, often on a poor connection. */
   :root {
     --bg: #fbfaf8;
     --fg: #1b1a18;
@@ -41,6 +42,7 @@
     -webkit-text-size-adjust: 100%;
   }
   main { max-width: 32rem; margin: 0 auto; }
+  .brand-icon { display: block; width: 4rem; height: 4rem; margin: 0 0 .75rem; }
   h1 { font-size: 1.4rem; margin: 0 0 .4rem; letter-spacing: -.01em; }
   p { margin: 0 0 1rem; }
   .muted { color: var(--muted); font-size: .92rem; }
@@ -111,6 +113,7 @@
 </head>
 <body>
 <main>
+<img class="brand-icon" src="{{ url_for('static', path='icon.svg') }}" width="64" height="64" alt="NeoDB Portal">
 {% block content %}{% endblock %}
 </main>
 </body>

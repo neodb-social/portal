@@ -168,3 +168,9 @@ is registered with each instance, so it must be the address users actually reach
 ## Licence
 
 AGPL-3.0
+
+## Branding
+
+The page header and browser icon use the transparent T1B-1 rev-02 symbol
+from the NeoDB design package (`final/logo/icon.svg`). The original SVG is
+kept in `neodb_portal/static/icon.svg` and served locally without a background.
